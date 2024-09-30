@@ -14,9 +14,12 @@ app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "index.html"));
 });
 
-io.on("connection", (socket) => {
-  console.log("A user connected");
-  console.log(socket.id);
+io.on("connection", (client) => {
+  console.log(`Client connected: ${client.id}`);
+
+  client.on("disconnect", () => {
+    console.log(`Client disconnected: ${client.id} ❌`);
+  });
 });
 
 server.listen(3000, () => {
