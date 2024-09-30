@@ -17,9 +17,11 @@ app.get("/", (req, res) => {
 io.on("connection", (client) => {
   console.log(`Client connected: ${client.id}`);
 
-  //send message
+  client.on("message", (message) => {
+    console.log(message);
+  });
 
-  io.emit("message", "Hello, from server ✅!");
+  client.emit("from-server-mess", "Hello from server 👋");
 
   client.on("disconnect", () => {
     console.log(`Client disconnected: ${client.id} ❌`);
